@@ -28,4 +28,15 @@ public class IndexCntl {
 		
 	}
 	
+	@RequestMapping(value="/m", method=RequestMethod.GET)
+	public String m(Model model) {
+		
+		ArrayList<Test> listTest = testService.listTest();
+
+		model.addAttribute("listTest", listTest);
+		
+		return "mobile";
+		
+	}
+	
 }
