@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		 xmlns="http://java.sun.com/xml/ns/javaee" 
+		 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+		 version="3.0">
+
+<!-- DB 연결 정보 설정 -->
+<context-param>
+	<param-name>contextConfigLocation</param-name>
+	<param-value>
+		/WEB-INF/config/dbPoolContext.xml
+	</param-value>
+</context-param>
+
+<!-- 한글 깨짐방지 필터와 URL 필터 설정 -->
+<filter>
+	<filter-name>CharacterEncodingFilter</filter-name>
+	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	<init-param>
+		<param-name>encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</init-param>
+	<init-param>
+		<param-name>forceEncoding</param-name>
+		<param-value>true</param-value>
+	</init-param>
+</filter>
+<filter>
+	<filter-name>HttpMethodFilter</filter-name>
+	<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>CharacterEncodingFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+	<filter-name>HttpMethodFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+
+<!-- 리스너 설정 -->
+<listener>
+	<listener-class>
+		org.springframework.web.context.ContextLoaderListener
+	</listener-class>
+</listener>
+
+<!-- 서블릿 설정 -->
+<servlet>
+	<servlet-name>Wann2Web02</servlet-name>
+	<servlet-class>
+		org.springframework.web.servlet.DispatcherServlet
+	</servlet-class>
+	<init-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/config/dispatcherServlet.xml
+		</param-value>
+	</init-param>
+	<load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>Wann2Web02</servlet-name>
+	<url-pattern>/</url-pattern>
+</servlet-mapping>
+
+<!-- 세션 타임아웃 설정(단위:분) -->
+<session-config>
+	<session-timeout>60</session-timeout>
+</session-config>
+
+</web-app>
